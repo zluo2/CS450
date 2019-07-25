@@ -1,2 +1,2 @@
 # CS450
-GMU-CS450-database
+CS450-database
