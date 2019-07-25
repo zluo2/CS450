@@ -1,0 +1,43 @@
+/**
+ * Author:  Zhiwen Luo
+ * Date:    11/24/2017
+ * Purpose: Project Part 3
+**/
+
+// Assuming the database connection has already been established
+
+//retrieves the employees who work in the Research department
+//print the employee last name and their Ssn
+
+CREATE FUNCTION Query_one()
+    name VARCHAR; ssn INT;
+    CURSOR cursor IS SELECT Lname, Ssn FROM EMPLOYEE, DEPARTMENT WHERE Dno=Dnumber AND Dname="Research";
+    BEGIN
+        OPEN cursor;
+        LOOP
+            FETCH cursor INTO name, ssn;
+            EXIT WHEN cursor%NOTFOUND;
+            PRINT name, "    ", ssn;
+        END LOOP;
+    CLOSE cursor;
+    END;
+
+//retrieves the employees who work in departments located in 
+//Houston and on the project ‘ProductZ’.
+//print their last name, Ssn, and the number of hours that
+//the employee works on that project.
+
+CREATE FUNCTION Query_two()
+    name VARCHAR; ssn INT; hours DOUBLE;
+    CURSOR cursor IS SELECT Lname, Ssn, Hours FROM EMPLOYEE, WORKS_ON, PROJECT, DEPT_LOCATIONS
+                     WHERE Ssn = Essn AND Pno = Pnumber AND Dno = Dnumber AND Dlocation = 'Houston'
+                     AND Pname = 'ProductZ';
+    BEGIN
+        OPEN cursor;
+        LOOP
+            FETCH cursor INTO name, ssn, hours;
+            EXIT WHEN cursor%NOTFOUND;
+            PRINT name, "    ", ssn, "    ", hours;
+        END LOOP;
+    CLOSE cursor;
+    END;
